@@ -40,8 +40,10 @@ const cardBase = {
 };
 
 export default function Portfolio() {
-  const [openRole, setOpenRole] = useState(null);
-  const toggleRole = (role) => setOpenRole(openRole === role ? null : role);
+const [openRole, setOpenRole] = useState<string | null>(null);
+const toggleRole = (role: string) =>
+  setOpenRole(openRole === role ? null : role);
+
 
   const experiences = [
     {
@@ -212,24 +214,27 @@ export default function Portfolio() {
             alignItems: "center",
           }}>
             {navLinks.map(([href, label]) => (
-              <a
-                key={href}
-                href={href}
-                style={{
-                  fontFamily: t.sans,
-                  fontSize: "0.78rem",
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: t.body,
-                  textDecoration: "none",
-                  transition: "color 0.15s",
-                  fontWeight: 500,
-                }}
-                onMouseEnter={e => e.target.style.color = t.accent}
-                onMouseLeave={e => e.target.style.color = t.body}
-              >
-                {label}
-              </a>
+	  
+<a
+  key={href}
+  href={href}
+  style={{
+    fontFamily: t.sans,
+    fontSize: "0.78rem",
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+    color: t.body,
+    textDecoration: "none",
+    transition: "color 0.15s",
+    fontWeight: 500,
+  }}
+  onMouseEnter={e => (e.currentTarget.style.color = t.accent)}
+  onMouseLeave={e => (e.currentTarget.style.color = t.body)}
+>
+  {label}
+</a>
+		  
+			  
             ))}
           </div>
         </nav>
@@ -507,16 +512,17 @@ export default function Portfolio() {
                       cursor: "default",
                       fontWeight: 400,
                     }}
-                    onMouseEnter={e => {
-                      e.target.style.borderColor = t.ink;
-                      e.target.style.background = t.ink;
-                      e.target.style.color = t.pageBg;
-                    }}
-                    onMouseLeave={e => {
-                      e.target.style.borderColor = t.certBorder;
-                      e.target.style.background = t.tagBg;
-                      e.target.style.color = t.body;
-                    }}
+onMouseEnter={e => {
+  e.currentTarget.style.borderColor = t.ink;
+  e.currentTarget.style.background = t.ink;
+  e.currentTarget.style.color = t.pageBg;
+}}
+onMouseLeave={e => {
+  e.currentTarget.style.borderColor = t.certBorder;
+  e.currentTarget.style.background = t.tagBg;
+  e.currentTarget.style.color = t.body;
+}}
+
                   >
                     {s}
                   </span>
@@ -582,16 +588,26 @@ export default function Portfolio() {
                       <p style={{ fontFamily: t.serifBody, fontSize: "0.83rem", color: t.body, lineHeight: 1.65, margin: "0 0 0.75rem" }}>{desc}</p>
                       {/* Only show the external link for non-YouTube cards — video is already inline */}
                       {!youtubeId && (
-                        <a
-                          href={link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{ fontFamily: t.sans, color: t.accent, fontSize: "0.78rem", fontWeight: 500, textDecoration: "none", letterSpacing: "0.03em" }}
-                          onMouseEnter={e => e.target.style.textDecoration = "underline"}
-                          onMouseLeave={e => e.target.style.textDecoration = "none"}
-                        >
-                          {linkLabel}
-                        </a>
+
+<a
+  href={link}
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    fontFamily: t.sans,
+    color: t.accent,
+    fontSize: "0.78rem",
+    fontWeight: 500,
+    textDecoration: "none",
+    letterSpacing: "0.03em",
+  }}
+  onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
+  onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+>
+  {linkLabel}
+</a>
+
+
                       )}
                     </div>
                   </div>
@@ -628,8 +644,15 @@ export default function Portfolio() {
                       fontWeight: 500,
                       transition: "background 0.15s, color 0.15s",
                     }}
-                    onMouseEnter={e => { e.target.style.background = t.ink; e.target.style.color = t.pageBg; }}
-                    onMouseLeave={e => { e.target.style.background = "transparent"; e.target.style.color = t.ink; }}
+                    onMouseEnter={(e) => {
+  e.currentTarget.style.background = t.ink;
+  e.currentTarget.style.color = t.pageBg;
+}}
+onMouseLeave={(e) => {
+  e.currentTarget.style.background = "transparent";
+  e.currentTarget.style.color = t.ink;
+}}
+
                   >
                     {label}
                   </a>
@@ -660,7 +683,13 @@ export default function Portfolio() {
 }
 
 // ─── Section heading: serif title + red rule ─────────────────────────────────
-function SectionHeading({ label, tokens: t }) {
+type SectionHeadingProps = {
+  label: string;
+  tokens: typeof t;
+};
+
+function SectionHeading({ label, tokens: t }: SectionHeadingProps) {
+
   return (
     <div style={{ marginBottom: "1.5rem" }}>
       <h2 style={{
